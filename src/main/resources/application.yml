@@ -1,3 +1,6 @@
+application.title: PeepFeed Blog
+application.version: 0.1.1
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/peep-feed-dev
