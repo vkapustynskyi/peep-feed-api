@@ -1,6 +1,7 @@
 package com.vkapustynskyi.peepfeed.entity;
 
 import com.vkapustynskyi.peepfeed.entity.core.AuditableEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -34,10 +35,10 @@ public class MainUser extends AuditableEntity {
 
     private LocalDate birthday;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<MainUserFollowing> followers;
 
-    @OneToMany(mappedBy = "follower")
+    @OneToMany(mappedBy = "follower", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<MainUserFollowing> followings;
 
 }

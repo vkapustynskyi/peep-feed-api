@@ -2,7 +2,9 @@ package com.vkapustynskyi.peepfeed.entity.core;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
@@ -16,6 +18,8 @@ import java.time.Instant;
 @Getter
 @Setter
 @Audited
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditableEntity extends IdHolder {
 

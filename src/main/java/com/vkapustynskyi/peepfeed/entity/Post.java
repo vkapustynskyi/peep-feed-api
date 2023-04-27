@@ -14,6 +14,7 @@ public class Post extends AuditableEntity {
 
     private String text;
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private Boolean isDeleted = false;
 
     @ManyToOne

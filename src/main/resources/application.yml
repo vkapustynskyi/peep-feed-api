@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/peep-feed-dev
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      org.hibernate.envers.default_schema: app_audit
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+  liquibase:
+    change-log: db/master.xml
+    enabled: false

@@ -1,12 +1,16 @@
 package com.vkapustynskyi.peepfeed.entity.core;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@MappedSuperclass
+@EqualsAndHashCode
 public abstract class IdHolder {
 
     @Id

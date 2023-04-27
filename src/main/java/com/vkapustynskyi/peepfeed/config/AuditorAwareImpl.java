@@ -10,7 +10,7 @@ public class AuditorAwareImpl implements AuditorAware<String> {
     @NonNull
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.empty(); // todo: implement
+        return Optional.of("system"); // todo: implement
     }
 
 }
