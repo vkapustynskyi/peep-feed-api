@@ -1,5 +1,11 @@
-application.title: PeepFeed Blog
-application.version: 0.1.1
+application:
+  title: PeepFeed Blog
+  version: 0.1.1
+  allowedOrigin: http://localhost:4200
+
+authentication.jwt:
+  secretKey: IXsnBJ3+sau2yEiFXEaUkMUCtS3Emz3Bst0cUVQx4zg=
+  accessTokenExpirationInMillis: 259200000
 
 spring:
   datasource:

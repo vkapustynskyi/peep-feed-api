@@ -1,28 +1,32 @@
 package com.vkapustynskyi.peepfeed.entity;
 
 import com.vkapustynskyi.peepfeed.entity.core.AuditableEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-public class MainUser extends AuditableEntity {
+public class MainUser extends AuditableEntity implements UserDetails {
 
     @Column(nullable = false, length = 40, updatable = false, unique = true)
     private String uuid = UUID.randomUUID().toString();
 
     @NotEmpty
     private String nickname;
+
+    private String password;
 
     @NotEmpty
     private String name;
@@ -41,4 +45,42 @@ public class MainUser extends AuditableEntity {
     @OneToMany(mappedBy = "follower", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<MainUserFollowing> followings;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private MainUserRole role;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.nickname;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
