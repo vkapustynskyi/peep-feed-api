@@ -1,16 +1,20 @@
 package com.vkapustynskyi.peepfeed.entity;
 
+import com.vkapustynskyi.peepfeed.dto.PostStatus;
 import com.vkapustynskyi.peepfeed.entity.core.AuditableEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class Post extends AuditableEntity {
 
     private String text;
@@ -23,6 +27,10 @@ public class Post extends AuditableEntity {
 
     @NotNull
     private Integer shares = 0;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private PostStatus status = PostStatus.MODERATION;
 
     @ManyToOne
     private Post shareOf;

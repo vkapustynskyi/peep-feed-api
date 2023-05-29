@@ -86,4 +86,8 @@ public class MainUser extends AuditableEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String getFullNameFirstLetters() {
+        return String.valueOf(getFirstName().charAt(0)) + getLastName().charAt(0);
+    }
 }

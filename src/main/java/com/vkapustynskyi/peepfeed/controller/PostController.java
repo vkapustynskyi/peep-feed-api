@@ -33,11 +33,40 @@ public class PostController {
         return postService.getMyPosts();
     }
 
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    public List<PostDto> getFeedPosts() {
+        log.info("Getting my posts");
+        return postService.getFeedPosts();
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public void deletePost(@PathVariable Long id) {
         log.info("Deleting my posts");
         postService.delete(id);
     }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void approve(@PathVariable Long id) {
+        log.info("Approving my posts");
+        postService.approve(id);
+    }
+
+    @PatchMapping("/{id}/decline")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void decline(@PathVariable Long id) {
+        log.info("Declining my posts");
+        postService.decline(id);
+    }
+
+    @GetMapping("/moderation")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<PostDto> getToModerate() {
+        log.info("Getting my posts");
+        return postService.getToModerate();
+    }
+
 
 }

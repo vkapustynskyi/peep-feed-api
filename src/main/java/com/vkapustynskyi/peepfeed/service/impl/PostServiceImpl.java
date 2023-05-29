@@ -1,6 +1,7 @@
 package com.vkapustynskyi.peepfeed.service.impl;
 
 import com.vkapustynskyi.peepfeed.dto.PostDto;
+import com.vkapustynskyi.peepfeed.dto.PostStatus;
 import com.vkapustynskyi.peepfeed.dto.StringValueDto;
 import com.vkapustynskyi.peepfeed.entity.Post;
 import com.vkapustynskyi.peepfeed.exception.NotFoundException;
@@ -37,9 +38,39 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDto> getFeedPosts() {
+        return repository.findByStatusIn(List.of(PostStatus.APPROVED))
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
     public void delete(Long id) {
         Post post = getById(id);
         post.setIsDeleted(true);
+        repository.save(post);
+    }
+
+    @Override
+    public void approve(Long id) {
+        Post post = getById(id);
+        post.setStatus(PostStatus.APPROVED);
+        repository.save(post);
+    }
+
+    @Override
+    public List<PostDto> getToModerate() {
+        return repository.findByStatusIn(List.of(PostStatus.MODERATION))
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public void decline(Long id) {
+        Post post = getById(id);
+        post.setStatus(PostStatus.DECLINED);
         repository.save(post);
     }
 

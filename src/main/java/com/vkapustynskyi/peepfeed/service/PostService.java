@@ -12,4 +12,12 @@ public interface PostService {
     List<PostDto> getMyPosts();
 
     void delete(Long id);
+
+    List<PostDto> getFeedPosts();
+
+    void approve(Long id);
+
+    List<PostDto> getToModerate();
+
+    void decline(Long id);
 }

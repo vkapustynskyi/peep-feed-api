@@ -1,5 +1,6 @@
 package com.vkapustynskyi.peepfeed.repository;
 
+import com.vkapustynskyi.peepfeed.dto.PostStatus;
 import com.vkapustynskyi.peepfeed.entity.MainUser;
 import com.vkapustynskyi.peepfeed.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByAuthorAndIsDeletedFalse(MainUser author);
+
+    List<Post> findByStatusIn(List<PostStatus> statuses);
 
 }

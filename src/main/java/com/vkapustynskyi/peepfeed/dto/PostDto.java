@@ -11,6 +11,12 @@ public class PostDto {
 
     private String text;
 
+    private String status;
+
+    private String author;
+
+    private String authorNickname;
+
     private Integer likes;
 
     private Integer shares;
