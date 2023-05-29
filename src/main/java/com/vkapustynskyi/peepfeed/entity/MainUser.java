@@ -52,6 +52,9 @@ public class MainUser extends AuditableEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private MainUserRole role = MainUserRole.USER;
 
+    @NotNull
+    private Boolean isEnabled = true;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -84,7 +87,7 @@ public class MainUser extends AuditableEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
     public String getFullNameFirstLetters() {

@@ -4,6 +4,7 @@ import com.vkapustynskyi.peepfeed.dto.user.MainUserRequest;
 import com.vkapustynskyi.peepfeed.dto.user.UserProfileDto;
 import com.vkapustynskyi.peepfeed.entity.MainUser;
 import com.vkapustynskyi.peepfeed.exception.BadRequestException;
+import com.vkapustynskyi.peepfeed.exception.NotFoundException;
 import com.vkapustynskyi.peepfeed.mapper.MainUserMapper;
 import com.vkapustynskyi.peepfeed.repository.MainUserRepository;
 import com.vkapustynskyi.peepfeed.service.MainUserService;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +45,26 @@ public class MainUserServiceImpl implements MainUserService {
     public MainUser getCurrentUser() {
         return getAuthentication()
                 .orElseThrow(() -> new IllegalStateException("Cannot get user principal"));
+    }
+
+    @Override
+    public List<UserProfileDto> getUsers() {
+        return repository.findAll()
+                .stream()
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public void toggleUserEnable(Long id) {
+        MainUser user = getById(id);
+        user.setIsEnabled(!user.getIsEnabled());
+        repository.save(user);
+    }
+
+    private MainUser getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("No user found"));
     }
 
     private static Optional<MainUser> getAuthentication() {

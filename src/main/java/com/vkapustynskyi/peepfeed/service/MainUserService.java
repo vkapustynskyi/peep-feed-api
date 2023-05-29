@@ -5,6 +5,7 @@ import com.vkapustynskyi.peepfeed.dto.user.MainUserRequest;
 import com.vkapustynskyi.peepfeed.dto.user.UserProfileDto;
 import com.vkapustynskyi.peepfeed.entity.MainUser;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MainUserService {
@@ -16,4 +17,8 @@ public interface MainUserService {
     UserProfileDto getCurrentProfile();
 
     MainUser getCurrentUser();
+
+    List<UserProfileDto> getUsers();
+
+    void toggleUserEnable(Long id);
 }

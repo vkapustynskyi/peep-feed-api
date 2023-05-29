@@ -21,4 +21,6 @@ public class UserProfileDto {
 
     private String role;
 
+    private Boolean isEnabled;
+
 }
