@@ -13,6 +13,7 @@ public interface CommentMapper {
     @Mapping(target = "post", source = "postId")
     Comment toEntity(CommentRequest request);
 
+    @Mapping(target = "comment", source = "text")
     @Mapping(target = "author", expression = "java(comment.getAuthor().getFullNameFirstLetters())")
     @Mapping(target = "authorNickname", expression = "java(comment.getAuthor().getNickname())")
     CommentDto toDto(Comment comment);

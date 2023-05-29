@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class CommentDto {
 
-    private String text;
+    private String comment;
 
     private String author;
 

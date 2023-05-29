@@ -3,22 +3,34 @@ package com.vkapustynskyi.peepfeed.mapper;
 import com.vkapustynskyi.peepfeed.dto.PostDto;
 import com.vkapustynskyi.peepfeed.dto.StringValueDto;
 import com.vkapustynskyi.peepfeed.entity.Post;
+import com.vkapustynskyi.peepfeed.service.MainUserService;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 
 @Mapper
-public interface PostMapper {
+public abstract class PostMapper {
+
+    @Autowired
+    private MainUserService userService;
 
     @Mapping(target = "text", source = "value")
-    Post toEntity(StringValueDto text);
+    public abstract Post toEntity(StringValueDto text);
 
     @Mapping(target = "author", expression = "java(post.getAuthor().getFullNameFirstLetters())")
     @Mapping(target = "authorNickname", expression = "java(post.getAuthor().getNickname())")
-    PostDto toDto(Post post);
+    public abstract PostDto toDto(Post post);
 
-    default Post fromId(Long id) {
+    @AfterMapping
+    public void afterToDto(@MappingTarget PostDto postDto, Post post) {
+        postDto.setIsLiked(post.isLiked(userService.getCurrentUser()));
+    }
+
+    public Post fromId(Long id) {
         if (Objects.isNull(id)) {
             return null;
 

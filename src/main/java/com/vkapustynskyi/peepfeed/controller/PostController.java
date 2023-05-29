@@ -64,8 +64,22 @@ public class PostController {
     @GetMapping("/moderation")
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<PostDto> getToModerate() {
-        log.info("Getting my posts");
+        log.info("Getting posts to moderate");
         return postService.getToModerate();
+    }
+
+    @PostMapping("/{id}/like")
+    @PreAuthorize("isAuthenticated()")
+    public void like(@PathVariable Long id) {
+        log.info("Like post with id: {}", id);
+        postService.like(id);
+    }
+
+    @PostMapping("/{id}/unlike")
+    @PreAuthorize("isAuthenticated()")
+    public void getToModerate(@PathVariable Long id) {
+        log.info("Unlike post with id: {}", id);
+        postService.unlike(id);
     }
 
 

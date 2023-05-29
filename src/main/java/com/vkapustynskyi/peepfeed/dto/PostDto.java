@@ -21,6 +21,8 @@ public class PostDto {
 
     private Integer shares;
 
+    private Boolean isLiked;
+
     private Boolean isDeleted = false;
 
 }

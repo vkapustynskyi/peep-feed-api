@@ -20,4 +20,8 @@ public interface PostService {
     List<PostDto> getToModerate();
 
     void decline(Long id);
+
+    void like(Long id);
+
+    void unlike(Long id);
 }

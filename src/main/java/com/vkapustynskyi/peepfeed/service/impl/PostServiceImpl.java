@@ -78,6 +78,20 @@ public class PostServiceImpl implements PostService {
         repository.save(post);
     }
 
+    @Override
+    public void like(Long id) {
+        Post post = getById(id);
+        post.addLike(userService.getCurrentUser());
+        repository.save(post);
+    }
+
+    @Override
+    public void unlike(Long id) {
+        Post post = getById(id);
+        post.removeLike(userService.getCurrentUser());
+        repository.save(post);
+    }
+
     private Post getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No post found"));

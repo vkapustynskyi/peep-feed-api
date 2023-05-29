@@ -7,9 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.envers.RelationTargetAuditMode;
 
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -52,5 +53,32 @@ public class Post extends AuditableEntity {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Comment> comments;
 
+    @NotAudited
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "post_like",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<MainUser> postLikes = new HashSet<>();
+
+    public void addLike(MainUser user) {
+        if (Objects.isNull(user)) {
+            return;
+        }
+        postLikes.add(user);
+    }
+
+    public void removeLike(MainUser user) {
+        if (Objects.isNull(user)) {
+            return;
+        }
+        postLikes.remove(user);
+    }
+
+    public boolean isLiked(MainUser user) {
+        return postLikes.stream()
+                .anyMatch(userLike -> Objects.equals(userLike, user));
+    }
 
 }
