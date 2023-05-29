@@ -26,10 +26,13 @@ public class MainUser extends AuditableEntity implements UserDetails {
     @NotEmpty
     private String nickname;
 
-    private String password;
+    @NotEmpty
+    private String firstName;
 
     @NotEmpty
-    private String name;
+    private String lastName;
+
+    private String password;
 
     private String description;
 
@@ -47,7 +50,7 @@ public class MainUser extends AuditableEntity implements UserDetails {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private MainUserRole role;
+    private MainUserRole role = MainUserRole.USER;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

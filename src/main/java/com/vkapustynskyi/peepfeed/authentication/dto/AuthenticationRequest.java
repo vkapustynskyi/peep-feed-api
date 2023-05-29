@@ -9,7 +9,7 @@ import lombok.Setter;
 public class AuthenticationRequest {
 
     @NotEmpty
-    private String email;
+    private String nickname;
 
     @NotEmpty
     private String password;

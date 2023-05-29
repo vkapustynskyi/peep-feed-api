@@ -2,6 +2,7 @@ package com.vkapustynskyi.peepfeed.entity;
 
 import com.vkapustynskyi.peepfeed.entity.core.AuditableEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,12 @@ public class Post extends AuditableEntity {
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     private Boolean isDeleted = false;
+
+    @NotNull
+    private Integer likes = 0;
+
+    @NotNull
+    private Integer shares = 0;
 
     @ManyToOne
     private Post shareOf;

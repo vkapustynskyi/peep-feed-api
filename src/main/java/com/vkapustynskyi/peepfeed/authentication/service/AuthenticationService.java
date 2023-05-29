@@ -24,7 +24,7 @@ public class AuthenticationService {
     }
 
     private MainUser getUserByRequest(AuthenticationRequest request) {
-        return userService.findByNickname(request.getEmail())
+        return userService.findByNickname(request.getNickname())
                 .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()))
                 .filter(user -> user.isAccountNonExpired() && user.isCredentialsNonExpired() && user.isEnabled())
                 .orElseThrow(() -> new NotFoundException("No user found with current credentials"));
