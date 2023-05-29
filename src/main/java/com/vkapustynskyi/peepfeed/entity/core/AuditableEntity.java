@@ -1,7 +1,6 @@
 package com.vkapustynskyi.peepfeed.entity.core;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,7 @@ import java.time.Instant;
 @Audited
 @AllArgsConstructor
 @NoArgsConstructor
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditableEntity extends IdHolder {
 

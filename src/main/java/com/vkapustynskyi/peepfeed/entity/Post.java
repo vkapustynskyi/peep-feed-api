@@ -49,5 +49,8 @@ public class Post extends AuditableEntity {
     )
     private List<Image> postImages;
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Comment> comments;
+
 
 }

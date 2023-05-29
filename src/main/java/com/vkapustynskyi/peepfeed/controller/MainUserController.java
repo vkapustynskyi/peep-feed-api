@@ -33,14 +33,14 @@ public class MainUserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
     public List<UserProfileDto> getUsers() {
         log.info("Getting users");
         return userService.getUsers();
     }
 
     @PatchMapping("/{id}/enable")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("isAuthenticated() && hasAuthority('ADMIN')")
     public void toggleUserEnable(@PathVariable Long id) {
         log.info("Toggle user enability");
         userService.toggleUserEnable(id);

@@ -12,6 +12,7 @@ import com.vkapustynskyi.peepfeed.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -33,6 +34,7 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> getMyPosts() {
         return repository.findByAuthorAndIsDeletedFalse(userService.getCurrentUser())
                 .stream()
+                .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                 .map(mapper::toDto)
                 .toList();
     }
@@ -41,6 +43,7 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> getFeedPosts() {
         return repository.findByStatusIn(List.of(PostStatus.APPROVED))
                 .stream()
+                .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                 .map(mapper::toDto)
                 .toList();
     }
@@ -63,6 +66,7 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> getToModerate() {
         return repository.findByStatusIn(List.of(PostStatus.MODERATION))
                 .stream()
+                .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                 .map(mapper::toDto)
                 .toList();
     }

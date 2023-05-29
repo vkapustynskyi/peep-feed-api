@@ -6,6 +6,8 @@ import com.vkapustynskyi.peepfeed.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Objects;
+
 @Mapper
 public interface PostMapper {
 
@@ -15,4 +17,14 @@ public interface PostMapper {
     @Mapping(target = "author", expression = "java(post.getAuthor().getFullNameFirstLetters())")
     @Mapping(target = "authorNickname", expression = "java(post.getAuthor().getNickname())")
     PostDto toDto(Post post);
+
+    default Post fromId(Long id) {
+        if (Objects.isNull(id)) {
+            return null;
+
+        }
+        Post post = new Post();
+        post.setId(id);
+        return post;
+    }
 }

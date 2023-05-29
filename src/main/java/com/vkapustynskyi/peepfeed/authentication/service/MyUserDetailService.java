@@ -1,5 +1,6 @@
 package com.vkapustynskyi.peepfeed.authentication.service;
 
+import com.vkapustynskyi.peepfeed.entity.MainUser;
 import com.vkapustynskyi.peepfeed.service.MainUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ public class MyUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userService.findByNickname(username)
+                .filter(MainUser::isEnabled)
                 .orElse(null);
     }
 }
