@@ -3,6 +3,7 @@ package com.vkapustynskyi.peepfeed.service.impl;
 import com.vkapustynskyi.peepfeed.dto.PostDto;
 import com.vkapustynskyi.peepfeed.dto.PostStatus;
 import com.vkapustynskyi.peepfeed.dto.StringValueDto;
+import com.vkapustynskyi.peepfeed.entity.MainUser;
 import com.vkapustynskyi.peepfeed.entity.Post;
 import com.vkapustynskyi.peepfeed.exception.NotFoundException;
 import com.vkapustynskyi.peepfeed.mapper.PostMapper;
@@ -40,8 +41,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<PostDto> getByAuthorId(Long id) {
+        MainUser author = userService.getById(id);
+        return repository.findByAuthorAndIsDeletedFalse(author)
+                .stream()
+                .filter(post -> post.getStatus() == PostStatus.APPROVED)
+                .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
     public List<PostDto> getFeedPosts() {
-        return repository.findByStatusIn(List.of(PostStatus.APPROVED))
+        return repository.findByStatusInAndIsDeletedFalse(List.of(PostStatus.APPROVED))
                 .stream()
                 .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                 .map(mapper::toDto)
@@ -64,7 +75,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> getToModerate() {
-        return repository.findByStatusIn(List.of(PostStatus.MODERATION))
+        return repository.findByStatusInAndIsDeletedFalse(List.of(PostStatus.MODERATION))
                 .stream()
                 .sorted(Comparator.comparing(Post::getCreatedDate).reversed())
                 .map(mapper::toDto)

@@ -13,6 +13,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findByAuthorAndIsDeletedFalse(MainUser author);
 
-    List<Post> findByStatusIn(List<PostStatus> statuses);
+    List<Post> findByStatusInAndIsDeletedFalse(List<PostStatus> statuses);
 
 }

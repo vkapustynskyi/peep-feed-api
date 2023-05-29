@@ -13,6 +13,8 @@ public interface PostService {
 
     void delete(Long id);
 
+    List<PostDto> getByAuthorId(Long id);
+
     List<PostDto> getFeedPosts();
 
     void approve(Long id);

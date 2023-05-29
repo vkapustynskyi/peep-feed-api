@@ -21,4 +21,8 @@ public interface MainUserService {
     List<UserProfileDto> getUsers();
 
     void toggleUserEnable(Long id);
+
+    UserProfileDto getUserDtoById(Long id);
+
+    MainUser getById(Long id);
 }

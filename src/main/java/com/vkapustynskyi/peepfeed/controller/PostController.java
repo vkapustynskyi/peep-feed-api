@@ -33,6 +33,13 @@ public class PostController {
         return postService.getMyPosts();
     }
 
+    @GetMapping("/by-author/{authorId}")
+    @PreAuthorize("isAuthenticated()")
+    public List<PostDto> getByAuthorId(@PathVariable Long authorId) {
+        log.info("Getting posts by author id: {}", authorId);
+        return postService.getByAuthorId(authorId);
+    }
+
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public List<PostDto> getFeedPosts() {

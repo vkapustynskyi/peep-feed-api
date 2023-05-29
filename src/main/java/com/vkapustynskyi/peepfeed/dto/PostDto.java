@@ -1,5 +1,6 @@
 package com.vkapustynskyi.peepfeed.dto;
 
+import com.vkapustynskyi.peepfeed.dto.user.UserShortDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,9 +14,7 @@ public class PostDto {
 
     private String status;
 
-    private String author;
-
-    private String authorNickname;
+    private UserShortDto author;
 
     private Integer likes;
 

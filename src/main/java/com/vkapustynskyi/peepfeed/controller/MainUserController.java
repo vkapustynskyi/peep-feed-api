@@ -46,4 +46,9 @@ public class MainUserController {
         userService.toggleUserEnable(id);
     }
 
+    @GetMapping("/{id}")
+    public UserProfileDto getUserById(@PathVariable Long id) {
+        log.info("Getting user by id: {}", id);
+        return userService.getUserDtoById(id);
+    }
 }

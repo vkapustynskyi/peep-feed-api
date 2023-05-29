@@ -62,7 +62,14 @@ public class MainUserServiceImpl implements MainUserService {
         repository.save(user);
     }
 
-    private MainUser getById(Long id) {
+    @Override
+    public UserProfileDto getUserDtoById(Long id) {
+        MainUser user = getById(id);
+        return mapper.toDto(user);
+    }
+
+    @Override
+    public MainUser getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("No user found"));
     }

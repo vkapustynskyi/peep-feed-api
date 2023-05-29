@@ -2,6 +2,7 @@ package com.vkapustynskyi.peepfeed.mapper;
 
 import com.vkapustynskyi.peepfeed.dto.user.MainUserRequest;
 import com.vkapustynskyi.peepfeed.dto.user.UserProfileDto;
+import com.vkapustynskyi.peepfeed.dto.user.UserShortDto;
 import com.vkapustynskyi.peepfeed.entity.MainUser;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
@@ -20,6 +21,8 @@ public abstract class MainUserMapper {
     public abstract MainUser toEntity(MainUserRequest request);
 
     public abstract UserProfileDto toDto(MainUser user);
+
+    public abstract UserShortDto toShortDto(MainUser user);
 
     @AfterMapping
     protected void afterToEntity(@MappingTarget MainUser user, MainUserRequest request) {
