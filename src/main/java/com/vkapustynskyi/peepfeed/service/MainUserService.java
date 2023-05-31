@@ -25,4 +25,6 @@ public interface MainUserService {
     UserProfileDto getUserDtoById(Long id);
 
     MainUser getById(Long id);
+
+    Optional<MainUser> getAuthentication();
 }

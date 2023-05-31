@@ -25,7 +25,9 @@ public abstract class PostMapper {
 
     @AfterMapping
     public void afterToDto(@MappingTarget PostDto postDto, Post post) {
-        postDto.setIsLiked(post.isLiked(userService.getCurrentUser()));
+        if (userService.getAuthentication().isPresent()) {
+            postDto.setIsLiked(post.isLiked(userService.getCurrentUser()));
+        }
     }
 
     public Post fromId(Long id) {

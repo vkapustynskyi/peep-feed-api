@@ -74,7 +74,8 @@ public class MainUserServiceImpl implements MainUserService {
                 .orElseThrow(() -> new NotFoundException("No user found"));
     }
 
-    private static Optional<MainUser> getAuthentication() {
+    @Override
+    public Optional<MainUser> getAuthentication() {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .map(Authentication::getPrincipal)
                 .filter(MainUser.class::isInstance)
